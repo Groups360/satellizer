@@ -519,7 +519,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
               if (window.cordova) {
                 openPopup = popup.open(url, defaults.name, defaults.popupOptions, defaults.redirectUri).eventListener(defaults.redirectUri);
               } else {
-                openPopup = popup.open(url, defaults.name, defaults.popupOptions, defaults.redirectUri).pollPopup(defaults.redirectUri);
+                openPopup = popup.open(url, defaults.name, defaults.popupOptions, defaults.redirectUri).pollPopup(defaults.redirectUri, defaults.popupOptions.type);
               }
 
               return openPopup
@@ -690,7 +690,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
       '$window',
       'SatellizerConfig',
       'SatellizerUtils',
-      function($q, $interval, $window, config, utils) {
+      '$uibModal',
+      function($q, $interval, $window, config, utils, $uibModal) {
         var Popup = {};
 
         Popup.url = '';
@@ -703,7 +704,14 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           var UA = $window.navigator.userAgent;
           var windowName = (window.cordova || UA.indexOf('CriOS') > -1) ? '_blank' : name;
 
-          Popup.popupWindow = $window.open(url, windowName, stringifiedOptions);
+          if (options.type == 'modal') {
+            Popup.popupWindow = $uibModal.open({
+              windowClass: 'satellizer-popup',
+              template: '<div class="modal-body"><iframe id="satellizer-popup" width="100%" height="100%" frameborder="0" src="' + url + '"></iframe></div>'
+            });
+          } else {
+            Popup.popupWindow = $window.open(url, windowName, stringifiedOptions);
+          }
 
           $window.popup = Popup.popupWindow;
 
@@ -748,7 +756,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           return deferred.promise;
         };
 
-        Popup.pollPopup = function(redirectUri) {
+        Popup.pollPopup = function(redirectUri, type) {
           var deferred = $q.defer();
 
           var redirectUriParser = document.createElement('a');
@@ -757,13 +765,17 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           var redirectUriPath = utils.getFullUrlPath(redirectUriParser);
 
           var polling = $interval(function() {
-            if (!Popup.popupWindow || Popup.popupWindow.closed || Popup.popupWindow.closed === undefined) {
+            if (!Popup.popupWindow || Popup.popupWindow.closed === true || Popup.popupWindow.closed === undefined) {
               deferred.reject('The popup window was closed.');
               $interval.cancel(polling);
             }
 
             try {
-              var popupWindowPath = utils.getFullUrlPath(Popup.popupWindow.location);
+              if (type === 'modal') {
+                var popupWindowPath = utils.getFullUrlPath(document.getElementById('satellizer-popup').contentWindow.location);
+              } else {
+                var popupWindowPath = utils.getFullUrlPath(Popup.popupWindow.location);
+              }
 
               // Redirect has occurred.
               if (popupWindowPath === redirectUriPath) {
@@ -806,10 +818,12 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           options = options || {};
           var width = options.width || 500;
           var height = options.height || 500;
+          var type = options.type || 'window';
 
           return angular.extend({
             width: width,
             height: height,
+            type: type,
             left: $window.screenX + (($window.outerWidth - width) / 2),
             top: $window.screenY + (($window.outerHeight - height) / 2.5)
           }, options);
