@@ -704,7 +704,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           var UA = $window.navigator.userAgent;
           var windowName = (window.cordova || UA.indexOf('CriOS') > -1) ? '_blank' : name;
 
-          if (options.type == 'modal') {
+          if (options.type === 'modal') {
             Popup.popupWindow = $uibModal.open({
               windowClass: 'satellizer-popup',
               template: '<div class="modal-body"><iframe id="satellizer-popup" width="100%" height="100%" frameborder="0" src="' + url + '"></iframe></div>'
