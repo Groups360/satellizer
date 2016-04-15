@@ -772,17 +772,19 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
             try {
               if (type === 'modal') {
-                var popupWindowPath = utils.getFullUrlPath(document.getElementById('satellizer-popup').contentWindow.location);
+                var popupLocation = document.getElementById('satellizer-popup').contentWindow.location;
+                var popupWindowPath = utils.getFullUrlPath(popupLocation);
               } else {
+                var popupLocation = Popup.popupWindow.location;
                 var popupWindowPath = utils.getFullUrlPath(Popup.popupWindow.location);
               }
 
               // Redirect has occurred.
               if (popupWindowPath === redirectUriPath) {
                 // Contains query/hash parameters as expected.
-                if (Popup.popupWindow.location.search || Popup.popupWindow.location.hash) {
-                  var queryParams = Popup.popupWindow.location.search.substring(1).replace(/\/$/, '');
-                  var hashParams = Popup.popupWindow.location.hash.substring(1).replace(/[\/$]/, '');
+                if (popupLocation.search || popupLocation.hash) {
+                  var queryParams = popupLocation.search.substring(1).replace(/\/$/, '');
+                  var hashParams = popupLocation.hash.substring(1).replace(/[\/$]/, '');
                   var hash = utils.parseQueryString(hashParams);
                   var qs = utils.parseQueryString(queryParams);
 
