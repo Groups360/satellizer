@@ -765,8 +765,6 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           var redirectUriPath = utils.getFullUrlPath(redirectUriParser);
 
           var polling = $interval(function() {
-            debugger;
-
             if (!Popup.popupWindow || Popup.popupWindow.closed === true || Popup.popupWindow.closed === undefined) {
               deferred.reject('The popup window was closed.');
               $interval.cancel(polling);
