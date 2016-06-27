@@ -709,6 +709,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           if (options.type === 'modal') {
             Popup.popupWindow = $uibModal.open({
               windowClass: 'satellizer-popup',
+              backdrop: 'static',
               template: '<div class="modal-body"><iframe id="satellizer-popup" width="100%" height="100%" frameborder="0" src="' + url + '"></iframe></div>'
             });
           } else {
