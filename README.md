@@ -5,9 +5,9 @@
 [![Donate](https://img.shields.io/badge/paypal-donate-blue.svg)](https://paypal.me/sahat) [![Join the chat at https://gitter.im/sahat/satellizer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sahat/satellizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](http://img.shields.io/travis/sahat/satellizer.svg?style=flat)](https://travis-ci.org/sahat/satellizer)
 [![Test Coverage](http://img.shields.io/codeclimate/coverage/github/sahat/satellizer.svg?style=flat)](https://codeclimate.com/github/sahat/satellizer)
-[![Version](https://img.shields.io/badge/version-0.14.1-brightgreen.svg)](https://www.npmjs.org/package/satellizer)
+[![Version](https://img.shields.io/badge/version-0.14.1-brightgreen.svg)](https://www.npmjs.org/package/satellizer) [![Book session on Codementor](https://cdn.codementor.io/badges/book_session_github.svg)](https://www.codementor.io/sahatyalkabov?utm_source=github&utm_medium=button&utm_term=sahatyalkabov&utm_campaign=github)
 
-**Live Demo:** [https://satellizer.herokuapp.com](https://satellizer.herokuapp.com)
+**Live Demo:** http://satellizer-satellizer.rhcloud.com
 
 ---
 
@@ -456,7 +456,7 @@ use after page reload.
 ## Obtaining OAuth Keys
 
 <img src="https://camo.githubusercontent.com/204e6b07369021b5b9eb7d228d051aca72a457ef/68747470733a2f2f75706c6f61642e77696b696d656469612e6f72672f77696b6970656469612f636f6d6d6f6e732f7468756d622f322f32662f476f6f676c655f323031355f6c6f676f2e7376672f3130303070782d476f6f676c655f323031355f6c6f676f2e7376672e706e67" width="150">
-- Visit [Google Cloud Console](https://cloud.google.com/console/project)
+- Visit [Google Developer Console](https://console.developers.google.com/iam-admin/projects)
 - Click **CREATE PROJECT** button
 - Enter *Project Name*, then click **CREATE**
 - Then select *APIs & auth* from the sidebar and click on *Credentials* tab
